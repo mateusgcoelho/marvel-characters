@@ -9,45 +9,45 @@ import 'character_repository_impl_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {
-  group('CharacterRepositoryImpl | ', () {
-    late CharacterRepositoryImpl repository;
-    late MockDio mockDio;
+  late CharacterRepositoryImpl repository;
+  late MockDio mockDio;
 
-    setUp(() {
-      mockDio = MockDio();
+  setUp(() {
+    mockDio = MockDio();
 
-      final responseData = {
-        "data": {
-          "results": [
-            {
-              "id": 1,
-              "name": "Alice",
-              "description": "Personagem principal",
-              "thumbnail": {
-                "path": "imagem",
-                "extension": "jpg",
-              },
+    final responseData = {
+      "data": {
+        "results": [
+          {
+            "id": 1,
+            "name": "Alice",
+            "description": "Personagem principal",
+            "thumbnail": {
+              "path": "imagem",
+              "extension": "jpg",
             },
-          ]
-        }
-      };
+          },
+        ]
+      }
+    };
 
-      when(
-        mockDio.get(
-          'characters',
-          queryParameters: anyNamed('queryParameters'),
-        ),
-      ).thenAnswer(
-        (_) async => Response(
-          data: responseData,
-          statusCode: 200,
-          requestOptions: RequestOptions(),
-        ),
-      );
+    when(
+      mockDio.get(
+        'characters',
+        queryParameters: anyNamed('queryParameters'),
+      ),
+    ).thenAnswer(
+      (_) async => Response(
+        data: responseData,
+        statusCode: 200,
+        requestOptions: RequestOptions(),
+      ),
+    );
 
-      repository = CharacterRepositoryImpl(mockDio);
-    });
+    repository = CharacterRepositoryImpl(mockDio);
+  });
 
+  group('CharacterRepositoryImpl | ', () {
     test(
         'Dado uma solicitação de personagens bem-sucedida, Quando getCharacters é chamado, Então deve retornar uma lista de CharacterEntity',
         () async {

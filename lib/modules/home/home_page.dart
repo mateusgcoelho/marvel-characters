@@ -36,7 +36,9 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.red,
+              ),
             ),
           ],
         );
@@ -66,6 +68,13 @@ class _HomePageState extends State<HomePage> {
 
       return Scaffold(
         appBar: AppBar(
+          title: const Text(
+            "Personagens Marvel",
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           actions: [
             IconButton(
               onPressed: isLoading || store.pageState.page == 1
