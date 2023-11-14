@@ -24,7 +24,7 @@ pipeline {
                 sh 'dart format --set-exit-if-changed .'
             }
         }
-        
+
         stage('Gerar build de aplicacao web') {
             steps {
                 sh 'flutter build web'
