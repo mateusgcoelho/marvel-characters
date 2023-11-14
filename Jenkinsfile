@@ -33,11 +33,6 @@ pipeline {
         
         stage('Login em DockerHub') {
             steps {
-                script {
-                    def credentials = credentials('docker-hub-credentials')
-                    echo credentials.username
-                    echo credentials.password
-                }
                 sh 'docker login -u mateusgcoelho -p Coelho21@12'
             }
         }
