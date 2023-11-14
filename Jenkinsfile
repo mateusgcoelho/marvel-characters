@@ -33,7 +33,9 @@ pipeline {
         }
         
         stage('Login em DockerHub') {
-            sh 'docker login -u mateusgcoelho -p Coelho21@12'
+            steps {
+                sh 'docker login -u mateusgcoelho -p Coelho21@12'
+            }
         }
 
         stage('Criação da imagem de docker') {
