@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_IMAGE_NAME = 'mateusgcoelho/marvel-characters'
         IMAGE_VERSION = sh(script: 'date + "%Y%m%d%H%M%S"', returnStdout: true).trim()
     }
     
@@ -42,7 +43,9 @@ pipeline {
                 script {
                     def credentials = credentials('docker-hub-credentials')
                     sh "docker login -u ${credentials.username} -p ${credentials.password}"
-                    sh 'docker push mateusgcoelho/marvel-characters'
+                    sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
+                    sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION} ${DOCKER_IMAGE_NAME}:latest"
+                    sh "docker push ${DOCKER_IMAGE_NAME}:latest"
                 }
             }
         }
