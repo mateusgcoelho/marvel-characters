@@ -45,14 +45,14 @@ pipeline {
             }
         }
 
-        stage('Upload versão da imagem para DockerHub') {
+        stage('Upload versao da imagem para DockerHub') {
             steps {
                 sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
             }
         }
 
 
-        stage('Upload versão latest da imagem para DockerHub') {
+        stage('Upload versao latest da imagem para DockerHub') {
             steps {
                 sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION} ${DOCKER_IMAGE_NAME}:latest"
                 sh "docker push ${DOCKER_IMAGE_NAME}:latest"
