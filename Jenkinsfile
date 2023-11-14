@@ -31,18 +31,20 @@ pipeline {
                 sh 'flutter build web'
             }
         }
+        
+        stage('Login em DockerHub') {
+            sh 'docker login -u mateusgcoelho -p Coelho21@12'
+        }
 
         stage('Criação da imagem de docker') {
             steps {
-                sh "docker build -t mateusgcoelho/marvel-characters:${IMAGE_VERSION} ."
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION} ."
             }
         }
 
         stage('Upload de imagem para DockerHub') {
             steps {
                 sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
-                sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION} ${DOCKER_IMAGE_NAME}:latest"
-                sh "docker push ${DOCKER_IMAGE_NAME}:latest"
             }
         }
         
