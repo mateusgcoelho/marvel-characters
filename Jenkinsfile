@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_USERNAME = credentials('docker-hub-credentials').username
-        DOCKER_PASSWORD = credentials('docker-hub-credentials').password
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -39,8 +34,9 @@ pipeline {
 
         stage('Upload de imagem para DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                script {
+                    def credentials = credentials('docker-hub-credentials')
+                    sh "docker login -u ${credentials.username} -p ${credentials.password}"
                     sh 'docker push mateusgcoelho/marvel-characters'
                 }
             }
