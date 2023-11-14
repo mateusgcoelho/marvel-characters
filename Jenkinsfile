@@ -25,12 +25,6 @@ pipeline {
             }
         }
         
-        stage('Gerar build de aplicacao web') {
-            steps {
-                sh 'flutter build web'
-            }
-        }
-        
         stage('Login em DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
