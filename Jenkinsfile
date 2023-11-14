@@ -7,9 +7,14 @@ pipeline {
     }
     
     stages {
-        stage('Teste de codigo') {
+        stage('Valida dependencias') {
             steps {
                 sh 'flutter pub get'
+            }
+        }
+        
+        stage('Teste de codigo') {
+            steps {
                 sh 'flutter test'
             }
         }
