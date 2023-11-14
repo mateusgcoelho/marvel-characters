@@ -12,7 +12,7 @@ pipeline {
             }
         }
 
-        stage('Teste de código') {
+        stage('Teste de codigo') {
             steps {
                 sh 'flutter pub get'
                 sh 'flutter test'
@@ -25,7 +25,7 @@ pipeline {
             }
         }
         
-        stage('Gerar build de aplicação web') {
+        stage('Gerar build de aplicacao web') {
             steps {
                 sh 'flutter build web'
             }
