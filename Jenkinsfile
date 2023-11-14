@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_VERSION = sh(script: 'date + "%Y%m%d%H%M%S"', returnStdout: true).trim()
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -8,15 +12,16 @@ pipeline {
             }
         }
 
-        stage('Validação de formatação de código') {
-            steps {
-                sh 'dart format --set-exit-if-changed .'
-            }
-        }
-
         stage('Teste de código') {
             steps {
+                sh 'flutter pub get'
                 sh 'flutter test'
+            }
+        }
+        
+        stage('Validacao de formatacao de codigo') {
+            steps {
+                sh 'dart format --set-exit-if-changed .'
             }
         }
         
@@ -40,6 +45,9 @@ pipeline {
                     sh 'docker push mateusgcoelho/marvel-characters'
                 }
             }
+        }
+
+        stage('Subindo versao ') {
         }
     }
 }
