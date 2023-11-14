@@ -24,6 +24,12 @@ pipeline {
                 sh 'flutter test'
             }
         }
+        
+        stage('Gerar build de aplicação web') {
+            steps {
+                sh 'flutter build web'
+            }
+        }
 
         stage('Criação da imagem de docker') {
             steps {
