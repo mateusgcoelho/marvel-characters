@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y \
   unzip \
   libglu1-mesa
 
-RUN flutter build
-
 COPY build/web/ /var/www/html/
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
