@@ -40,7 +40,7 @@ pipeline {
         stage('Upload de imagem para DockerHub') {
             steps {
                 script {
-                    IMAGE_VERSION = sh(script: 'date + "%Y%m%d%H%M%S"', returnStdout: true).trim()
+                    IMAGE_VERSION = sh(script: 'date "+%Y%m%d%H%M%S"', returnStdout: true).trim()
                     echo "IMAGE_VERSION: ${IMAGE_VERSION}"
                     
                     def credentials = credentials('docker-hub-credentials')
