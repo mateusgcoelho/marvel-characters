@@ -7,12 +7,6 @@ pipeline {
     }
     
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Teste de codigo') {
             steps {
                 sh 'flutter pub get'
