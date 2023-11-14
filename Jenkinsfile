@@ -7,9 +7,14 @@ pipeline {
     }
     
     stages {
-        stage('Teste de codigo') {
+        stage('Valida dependencias') {
             steps {
                 sh 'flutter pub get'
+            }
+        }
+        
+        stage('Teste de codigo') {
+            steps {
                 sh 'flutter test'
             }
         }
@@ -28,12 +33,9 @@ pipeline {
         
         stage('Login em DockerHub') {
             steps {
-                script {
-                    def credentials = credentials('docker-hub-credentials')
-                    echo credentials.username
-                    echo credentials.password
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
                 }
-                sh 'docker login -u mateusgcoelho -p Coelho21@12'
             }
         }
 
