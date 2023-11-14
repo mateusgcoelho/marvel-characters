@@ -34,6 +34,11 @@ pipeline {
         
         stage('Login em DockerHub') {
             steps {
+                scripts {
+                    def credentials = credentials('docker-hub-credentials')
+                    echo credentials.username
+                    echo credentials.password
+                }
                 sh 'docker login -u mateusgcoelho -p Coelho21@12'
             }
         }
@@ -44,9 +49,17 @@ pipeline {
             }
         }
 
-        stage('Upload de imagem para DockerHub') {
+        stage('Upload versão da imagem para DockerHub') {
             steps {
                 sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
+            }
+        }
+
+
+        stage('Upload versão latest da imagem para DockerHub') {
+            steps {
+                sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION} ${DOCKER_IMAGE_NAME}:latest"
+                sh "docker push ${DOCKER_IMAGE_NAME}:latest"
             }
         }
         
