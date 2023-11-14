@@ -1,29 +1,18 @@
-# Use uma imagem base com suporte ao Flutter
-FROM ubuntu:20.04
+FROM php:apache
 
-# Instale as dependências necessárias
-RUN apt-get update && apt-get install -y curl git unzip xz-utils zip
-
-# Instale o Flutter
-RUN git clone https://github.com/flutter/flutter.git /flutter
-ENV PATH "$PATH:/flutter/bin"
-
-# Defina o diretório de trabalho
-WORKDIR /app
-
-# Copie os arquivos do projeto para o contêiner
-COPY . .
-
-# Build do projeto Flutter web
-RUN flutter build web
-
-# Configuração do Apache
-RUN apt-get install -y apache2
-RUN rm -rf /var/www/html/*
-RUN cp -r build/web/* /var/www/html/
-
-# Expor a porta 80 (padrão HTTP do Apache)
 EXPOSE 80
 
-# Comando de execução do Apache
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+WORKDIR /var/www/html
+
+RUN apt-get update && apt-get install -y \
+  unzip \
+  libglu1-mesa
+
+COPY build/web/ /var/www/html/
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN a2enmod rewrite
+
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+
+CMD ["apache2-foreground"]
