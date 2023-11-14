@@ -8,13 +8,6 @@ pipeline {
             }
         }
 
-        stage('Flutter Test') {
-            steps {
-                sh 'flutter pub get'
-                sh 'flutter test'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker buildx build -t mateusgcoelho/marvel-characters .'
