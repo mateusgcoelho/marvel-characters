@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = 'mateusgcoelho/marvel-characters'
-        IMAGE_VERSION = sh(script: 'date + "%Y%m%d%H%M%S"', returnStdout: true).trim()
     }
     
     stages {
@@ -41,6 +40,9 @@ pipeline {
         stage('Upload de imagem para DockerHub') {
             steps {
                 script {
+                    IMAGE_VERSION = sh(script: 'date + "%Y%m%d%H%M%S"', returnStdout: true).trim()
+                    echo "IMAGE_VERSION: ${IMAGE_VERSION}"
+                    
                     def credentials = credentials('docker-hub-credentials')
                     sh "docker login -u ${credentials.username} -p ${credentials.password}"
                     sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
