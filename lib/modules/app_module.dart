@@ -6,7 +6,7 @@ import 'package:heroes/shared/constants/keys.dart';
 class AppModule extends Module {
   @override
   void binds(Injector i) {
-    i.addInstance(
+    i.addInstance<Dio>(
       Dio(
         BaseOptions(
           baseUrl: "https://gateway.marvel.com/v1/public/",
