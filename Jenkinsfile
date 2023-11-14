@@ -50,7 +50,8 @@ pipeline {
             }
         }
 
-        stage('Subindo versao ') {
+        stage('Subindo container com versao de imagem') {
+            sh "docker run -d --name marvel-characters -p 80:80 ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
         }
     }
 }
