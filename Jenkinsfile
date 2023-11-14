@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t mateusgcoelho/marvel-characters .'
+                sh 'docker buildx build -t mateusgcoelho/marvel-characters .'
             }
         }
 
