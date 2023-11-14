@@ -40,10 +40,6 @@ pipeline {
 
         stage('Upload de imagem para DockerHub') {
             steps {
-                script {
-                    def credentials = credentials('docker-hub-credentials')
-                    sh "docker login -u ${credentials.username} -p ${credentials.password}"
-                }
                 sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
                 sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION} ${DOCKER_IMAGE_NAME}:latest"
                 sh "docker push ${DOCKER_IMAGE_NAME}:latest"
