@@ -58,11 +58,5 @@ pipeline {
                 sh "docker push ${DOCKER_IMAGE_NAME}:latest"
             }
         }
-        
-        stage('Subindo container com versao de imagem') {
-            steps {
-                sh "docker run -d --name marvel-characters -p 80:80 ${DOCKER_IMAGE_NAME}:${IMAGE_VERSION}"
-            }
-        }
     }
 }
